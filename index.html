@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Das hätte Betrug sein können</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Layout: ein Bildschirm, Sucher-Rahmen eines Handy-Scanners um die Kernbotschaft, darunter drei Warnsignale */
+  :root {
+    --bg: #F3F5F8;
+    --surface: #FFFFFF;
+    --ink: #16202E;
+    --muted: #556173;
+    --alert: #C8102E;
+    --alert-soft: #FBE6EA;
+    --line: #D9DEE6;
+    --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1520; --surface: #182131; --ink: #EEF2F7; --muted: #A3AEBF;
+      --alert: #FF5A6E; --alert-soft: #3A1A22; --line: #2A3546; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1520; --surface: #182131; --ink: #EEF2F7; --muted: #A3AEBF;
+    --alert: #FF5A6E; --alert-soft: #3A1A22; --line: #2A3546; color-scheme: dark;
+  }
+  html, body { min-height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.5;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 28px 32px;
+  }
+  main {
+    max-width: 34rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--alert);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--alert);
+  }
+  /* Sucher-Rahmen wie in der Kamera-App beim QR-Scan */
+  .finder {
+    position: relative;
+    padding: 26px 22px;
+  }
+  .finder span {
+    position: absolute;
+    width: 30px; height: 30px;
+    border-color: var(--alert);
+    border-style: solid;
+    border-width: 0;
+  }
+  .finder .tl { top: 0; left: 0; border-top-width: 4px; border-left-width: 4px; border-top-left-radius: 8px; }
+  .finder .tr { top: 0; right: 0; border-top-width: 4px; border-right-width: 4px; border-top-right-radius: 8px; }
+  .finder .bl { bottom: 0; left: 0; border-bottom-width: 4px; border-left-width: 4px; border-bottom-left-radius: 8px; }
+  .finder .br { bottom: 0; right: 0; border-bottom-width: 4px; border-right-width: 4px; border-bottom-right-radius: 8px; }
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--alert); }
+  .lead {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .url {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .url small { color: var(--muted); font-size: 0.85rem; }
+  .url code {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--alert);
+    overflow-wrap: anywhere;
+  }
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+  }
+  ul.signs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .signs li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .signs li > div { min-width: 0; }
+  .signs .mark {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--alert-soft);
+    color: var(--alert);
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+    font-size: 0.95rem;
+  }
+  .signs b { display: block; font-weight: 800; }
+  .signs p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .back { margin: 0; font-weight: 800; font-size: 1.05rem; }
+  .fine { margin: 0; color: var(--muted); font-size: 0.85rem; }
+  .fine a { color: var(--ink); }
+  a:focus-visible { outline: 3px solid var(--alert); outline-offset: 2px; border-radius: 3px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .finder span { animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+  }
+</style>
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="eyebrow">QR-Code gescannt</div>
+
+  <div class="finder" aria-hidden="false">
+    <span class="tl" aria-hidden="true"></span><span class="tr" aria-hidden="true"></span>
+    <span class="bl" aria-hidden="true"></span><span class="br" aria-hidden="true"></span>
+    <h1>Das hätte <em>Betrug</em> sein können.</h1>
+  </div>
+
+  <p class="lead">Sie haben gerade einen QR-Code geöffnet, ohne vorher zu sehen, wohin er führt. Genau so beginnt <strong>Quishing</strong>.</p>
+
+  <div class="url">
+    <small>Statt dieser Seite hätte sich zum Beispiel öffnen können:</small>
+    <code>meine-bank-sicherheit-login.info/verifizieren</code>
+  </div>
+
+  <h2>Drei Warnsignale</h2>
+  <ul class="signs">
+    <li><span class="mark">1</span><div><b>Adresse vor dem Öffnen prüfen</b><p>Die Kamera zeigt den Link vorher an. Unbekannte Domain? Nicht öffnen.</p></div></li>
+    <li><span class="mark">2</span><div><b>Kein Login und keine Zahlung über QR-Links</b><p>Banking immer nur über die eigene App oder die selbst eingetippte Adresse.</p></div></li>
+    <li><span class="mark">3</span><div><b>Überklebte Codes und unerwartete Briefe</b><p>An Parkautomaten, Ladesäulen oder in „Bankbriefen“ besonders misstrauisch sein.</p></div></li>
+  </ul>
+
+  <footer>
+    <p class="back">Keine Sorge: Diese Seite speichert nichts. Jetzt zurück zur Präsentation.</p>
+    <p class="fine">Aufklärungsseite einer studentischen Präsentation im Modul Digital Finance. Mehr zum Thema: <a href="https://www.verbraucherzentrale-niedersachsen.de/wissen/digitale-welt/datenschutz/betrug-mit-qrcodes-quishing-so-schuetzen-sie-sich-119850" rel="noopener">Verbraucherzentrale</a></p>
+  </footer>
+</main>
+
+</body>
+</html>
